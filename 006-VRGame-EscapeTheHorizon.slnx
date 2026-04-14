@@ -20,6 +20,7 @@
   <Project Path="Unity.XR.Oculus.csproj" />
   <Project Path="Unity.VisualScripting.Flow.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
   <Project Path="Unity.InputSystem.csproj" />
   <Project Path="Unity.XR.Oculus.Editor.csproj" />
