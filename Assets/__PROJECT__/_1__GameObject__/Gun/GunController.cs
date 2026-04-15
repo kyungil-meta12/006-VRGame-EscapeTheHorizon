@@ -20,6 +20,10 @@ public class GunController : MonoBehaviour
     public bool semiAuto; // 단발식 여부
     public float fireInterval; // 연사 간격
 
+    public float recoil; // 사격 시 반동
+    public float shake; // 사격 시 흔들림
+    public float recoilReturnSpeed; // 반동 복원 속도
+
     private bool hammerHit = false; // 공이가 한 번 쳐진 상태라면 더 이상 발사되지 않는다. // 단발식 총기 한정
     private float triggerDepth = 0f; // 트리거 입력 깊이
 
@@ -29,6 +33,9 @@ public class GunController : MonoBehaviour
     private float hammerRotOffset;
     private Vector3 triggerOriginRot;
     private float triggerRotOffset;
+
+    private Vector3 gunOriginPoision;
+    private float gunRecoilOffset; // 총기 z위치 오프셋
 
     private float currentTime;
 
@@ -50,13 +57,14 @@ public class GunController : MonoBehaviour
             triggerOriginRot = trigger.transform.localRotation.eulerAngles;
         }
 
-        device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-        hapticSupported = device.TryGetHapticCapabilities(out HapticCapabilities capabilities) && capabilities.supportsImpulse;
+        gunOriginPoision = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+        device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+        hapticSupported = device.TryGetHapticCapabilities(out HapticCapabilities capabilities) && capabilities.supportsImpulse;
         device.TryGetFeatureValue(CommonUsages.trigger, out triggerDepth);
 
         if(semiAuto) { // 단발식일 경우
@@ -104,6 +112,9 @@ public class GunController : MonoBehaviour
         // 방아쇠는 예외적으로 실시간으로 계속 회전값을 반영한다.
         triggerRotOffset = triggerDepth * triggerRotationMultiply;
 
+        // 반동 수치 복원
+        gunRecoilOffset = Mathf.Lerp(gunRecoilOffset, 0f, Time.deltaTime * recoilReturnSpeed);
+
         if(cylinder) // 실린더 회전
         {
             cylinder.transform.localRotation = Quaternion.Euler(cylinderOriginRot.x, cylinderOriginRot.y, cylinderOriginRot.z + cylinderRotOffset);
@@ -116,12 +127,16 @@ public class GunController : MonoBehaviour
         {
             trigger.transform.localRotation = Quaternion.Euler(triggerOriginRot.x + triggerRotOffset, triggerOriginRot.y, triggerOriginRot.z);
         }
+
+        transform.localPosition = gunOriginPoision + new Vector3(0f, 0f, -gunRecoilOffset);
     }
 
     public void FireGun()
     {
         //print("fire");
         Instantiate(gunFlamePrefab, flamePosition.transform.position, flamePosition.transform.rotation);
+        SG_CamShaker.Inst.AddShake(shake);
+        gunRecoilOffset += recoil;
         if (hapticSupported)
         {
             device.SendHapticImpulse(0, 1.0f, fireHapticDuration);
