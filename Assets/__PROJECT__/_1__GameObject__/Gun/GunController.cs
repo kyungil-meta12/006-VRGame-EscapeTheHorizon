@@ -133,10 +133,15 @@ public class GunController : MonoBehaviour
 
     public void FireGun()
     {
-        //print("fire");
-        Instantiate(gunFlamePrefab, flamePosition.transform.position, flamePosition.transform.rotation);
+        var newFlame = SG_ObjectPool.Inst.GetInstance(gunFlamePrefab);
+        newFlame.transform.position = flamePosition.transform.position;
+        newFlame.transform.rotation = flamePosition.transform.rotation;
+        newFlame.GetComponent<GunFlame>().Play();
+
         SG_CamShaker.Inst.AddShake(shake);
+
         gunRecoilOffset += recoil;
+
         if (hapticSupported)
         {
             device.SendHapticImpulse(0, 1.0f, fireHapticDuration);
