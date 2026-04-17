@@ -74,7 +74,7 @@ public class Zombie : PoolObject
         anim.SetBool("IsAttack", isAttack);
     }
 
-    public void GiveDamage(Vector3 hitPoint, Vector3 direction, int dmg, bool isHeadShot)
+    public void GiveDamage(Rigidbody rb, Vector3 hitPoint, Vector3 direction, int dmg, bool isHeadShot)
     {
         if(isDead)
         {
@@ -85,6 +85,7 @@ public class Zombie : PoolObject
         if(currHp < 0)
         {
             EnableRagdoll();
+            rb.AddForce(-direction * 100f, ForceMode.Impulse);
         }
 
         var newBloodParticle = SG_ObjectPool.Inst.GetInstance(bloodParticlePrefab);

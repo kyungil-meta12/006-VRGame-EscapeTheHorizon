@@ -7,8 +7,13 @@ public class GunController : MonoBehaviour
 {
     public Transform rayOrigin;
 
+    public GameObject ammoParticlePrefab;
+    public Transform ammoPosition;
+
+    public AudioClip[] fireSounds;
+
     public GameObject gunFlamePrefab;
-    public GameObject flamePosition;
+    public Transform flamePosition;
     public GameObject cylinder;
     public float cylinderRotationMultiply;
     public GameObject hammer;
@@ -44,6 +49,13 @@ public class GunController : MonoBehaviour
 
     private bool hapticSupported;
     private InputDevice device;
+
+    private AudioSource audio_;
+
+    void Awake()
+    {
+        audio_ = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -143,30 +155,35 @@ public class GunController : MonoBehaviour
     {
         var zombieColliderMask = 1 << LayerMask.NameToLayer("EnemyCollider");
         var zombieHeadMask = 1 << LayerMask.NameToLayer("EnemyHeadCollider");
-        var rayCastMask = zombieColliderMask | zombieHeadMask;
-
-        var result = Physics.RaycastAll(rayOrigin.position, rayOrigin.forward, 100f, rayCastMask);
-        foreach(var r in result)
-        {
-            var collidedLayer = 1 << r.collider.gameObject.layer;
+        var obstacleMask = 1 << LayerMask.NameToLayer("Obstacle");
+        var rayCastMask = zombieColliderMask | zombieHeadMask | obstacleMask;
+        
+        if(Physics.Raycast(rayOrigin.position, rayOrigin.forward, out var hit, 100f, rayCastMask)) {
+            var collidedLayer = 1 << hit.collider.gameObject.layer;
             if((collidedLayer & zombieColliderMask) != 0)
             {
-                var comp = r.collider.gameObject.GetComponentInParent<Zombie>();
-                comp.GiveDamage(r.point, r.normal, 20, false);
-                break;
+                var comp = hit.collider.gameObject.GetComponentInParent<Zombie>();
+                comp.GiveDamage(hit.collider.attachedRigidbody, hit.point, hit.normal, 20, false);
             }
             else if((collidedLayer & zombieHeadMask) != 0)
             {
-                var comp = r.collider.gameObject.GetComponentInParent<Zombie>();
-                comp.GiveDamage(r.point, r.normal, 20, true);
-                break;
+                var comp = hit.collider.gameObject.GetComponentInParent<Zombie>();
+                comp.GiveDamage(hit.collider.attachedRigidbody, hit.point, hit.normal, 20, true);
             }
         }
 
         var newFlame = SG_ObjectPool.Inst.GetInstance(gunFlamePrefab);
-        newFlame.transform.position = flamePosition.transform.position;
-        newFlame.transform.rotation = flamePosition.transform.rotation;
+        newFlame.transform.position = flamePosition.position;
+        newFlame.transform.rotation = flamePosition.rotation;
         newFlame.GetComponent<GunFlame>().Play();
+
+        var newAmmo = SG_ObjectPool.Inst.GetInstance(ammoParticlePrefab);
+        newAmmo.transform.position = ammoPosition.position;
+        newAmmo.transform.right = ammoPosition.right;
+        newAmmo.GetComponent<Ammo>().Play();
+
+        var soundIndex = Random.Range(0, fireSounds.Length);
+        audio_.PlayOneShot(fireSounds[soundIndex]);
 
         gunRecoilOffset += recoil;
 
