@@ -4,16 +4,16 @@ using System.Collections.Generic;
 public class PoolObject : MonoBehaviour
 {
     [HideInInspector]
-    public List<GameObject> pool;
+    public Stack<GameObject> stack;
 
-    public void SetPool(List<GameObject> pool_)
+    public void SetStack(Stack<GameObject> stack_)
     {
-        pool = pool_;
+        stack = stack_;
     }
 
     public void ReturnInstance(GameObject inst)
     {
         inst.SetActive(false);
-        pool.Add(inst);    
+        stack.Push(inst);    
     }
 }
