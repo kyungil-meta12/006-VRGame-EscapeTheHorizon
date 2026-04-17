@@ -63,6 +63,11 @@ public class GunController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(SG_GameMan.Inst.pauseState)
+        {
+            return;
+        }
+        
         device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
         hapticSupported = device.TryGetHapticCapabilities(out HapticCapabilities capabilities) && capabilities.supportsImpulse;
         device.TryGetFeatureValue(CommonUsages.trigger, out triggerDepth);

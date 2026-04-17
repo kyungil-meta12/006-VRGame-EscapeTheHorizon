@@ -2,9 +2,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ZombieController : PoolObject
+public class Zombie : PoolObject
 {
-    public Transform trackTarget;
     public Collider[] ragdollColliders;
     public Collider headCollider;
     public int totalHp;
@@ -13,6 +12,10 @@ public class ZombieController : PoolObject
     NavMeshAgent agent;
     bool isAttack = false;
     bool isDead = false;
+
+    
+    [HideInInspector]
+    public Transform trackTarget;
 
     void Awake()
     {
@@ -24,7 +27,7 @@ public class ZombieController : PoolObject
     // Update is called once per frame
     void Update()
     {
-        if(isDead)
+        if(isDead || !trackTarget)
         {
             return;
         }
@@ -44,6 +47,7 @@ public class ZombieController : PoolObject
         isDead = true;
         agent.enabled = false;
         anim.enabled = false;
+        SG_GameMan.Inst.currentKill++;
     }
 
     public void ResetState()
@@ -57,6 +61,7 @@ public class ZombieController : PoolObject
         isDead = false;
         isAttack = false;
         agent.enabled = true;
+        agent.Warp(transform.position);
         anim.enabled = true;
         anim.SetBool("IsAttack", isAttack);
     }
@@ -83,19 +88,6 @@ public class ZombieController : PoolObject
 
     bool IsDestinationReached()
     {
-        // 1. 경로를 계산 중이지 않고
-        if (!agent.pathPending)
-        {
-            // 2. 남은 거리가 정지 거리보다 작거나 같으며
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                // 3. 경로가 없거나 속도가 거의 없을 때 (정지 상태)
-                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return !agent.pathPending && (agent.remainingDistance <= agent.stoppingDistance) && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
     }
 }
