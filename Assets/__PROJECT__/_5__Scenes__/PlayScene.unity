@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &39358623 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 911564234344630934, guid: 099fe12e5fbd6b34984e3c4e8c0a172f, type: 3}
+  m_PrefabInstance: {fileID: 1485558103}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &357549061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,6 +1287,10 @@ PrefabInstance:
       propertyPath: rayOrigin
       value: 
       objectReference: {fileID: 1547320362}
+    - target: {fileID: 8578201977107538123, guid: 099fe12e5fbd6b34984e3c4e8c0a172f, type: 3}
+      propertyPath: flamePosition
+      value: 
+      objectReference: {fileID: 39358623}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
