@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2841446521831734409}
   - component: {fileID: 8413859047266456913}
   - component: {fileID: 5187308563653333285}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SubMGun_02_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8316896772181172924}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlamePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 1551732520102059015}
   - component: {fileID: 2733341523280254728}
   - component: {fileID: 7155772595932851145}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SubMGun_02_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 927275487382244218}
   - component: {fileID: 7212121818649099443}
   - component: {fileID: 6596963399875714066}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 443479677696462065}
   - component: {fileID: 6043645190375014844}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MP5K
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556aad7e9954e164e8e6f680d36a543e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunController
+  rayOrigin: {fileID: 0}
   gunFlamePrefab: {fileID: 3261440642245614132, guid: cbeef3876f7ff8a46b9f249accd4e869, type: 3}
   flamePosition: {fileID: 730600262416698592}
   cylinder: {fileID: 0}
@@ -386,9 +387,9 @@ MonoBehaviour:
   fireHapticDuration: 0.04
   semiAuto: 0
   fireInterval: 0.08
-  recoil: 0
-  shake: 0
-  recoilReturnSpeed: 0
+  recoil: 0.07
+  shake: 0.5
+  recoilReturnSpeed: 20
 --- !u!1 &6758422059103411168
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +401,7 @@ GameObject:
   - component: {fileID: 2936805238238494987}
   - component: {fileID: 8042499017599594230}
   - component: {fileID: 9156304839053546061}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_SubMGun_02_Magazine_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

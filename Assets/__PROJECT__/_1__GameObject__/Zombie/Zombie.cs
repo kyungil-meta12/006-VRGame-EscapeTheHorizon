@@ -1,11 +1,11 @@
-using Unity.VisualScripting;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Zombie : PoolObject
 {
     public Collider[] ragdollColliders;
-    public Collider headCollider;
     public int totalHp;
     int currHp;
     Animator anim;
@@ -13,7 +13,6 @@ public class Zombie : PoolObject
     bool isAttack = false;
     bool isDead = false;
 
-    
     [HideInInspector]
     public Transform trackTarget;
 
@@ -24,30 +23,40 @@ public class Zombie : PoolObject
         ResetState();
     }
 
+    IEnumerator AutoReturn()
+    {
+        yield return new WaitForSeconds(3f);
+        ReturnInstance(gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(isDead || !trackTarget)
-        {
-            return;
+        if(!isDead) {
+            agent.SetDestination(trackTarget.position);
+            isAttack = IsDestinationReached();
+            anim.SetBool("IsAttack", isAttack);
         }
-        
-        agent.SetDestination(trackTarget.position);
-        isAttack = IsDestinationReached();
-        anim.SetBool("IsAttack", isAttack);
     }
 
     public void EnableRagdoll()
     {
         foreach(var c in ragdollColliders)
         {
-            c.isTrigger = true;
-            c.attachedRigidbody.isKinematic = true;
+            c.isTrigger = false;
+            c.attachedRigidbody.isKinematic = false;
         }
         isDead = true;
         agent.enabled = false;
         anim.enabled = false;
         SG_GameMan.Inst.currentKill++;
+        StartCoroutine(AutoReturn()); // 3초 후 인스턴스 리턴
+    }
+
+    public void SetPosition(Vector3 pos)
+    {
+        agent.enabled = true;
+        agent.Warp(pos);
     }
 
     public void ResetState()
@@ -60,8 +69,6 @@ public class Zombie : PoolObject
         currHp = totalHp;
         isDead = false;
         isAttack = false;
-        agent.enabled = true;
-        agent.Warp(transform.position);
         anim.enabled = true;
         anim.SetBool("IsAttack", isAttack);
     }

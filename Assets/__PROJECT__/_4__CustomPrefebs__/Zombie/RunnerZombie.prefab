@@ -1023,7 +1023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7637533952888463731}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Eyebrows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1120,7 +1120,7 @@ GameObject:
   - component: {fileID: 2688852029174558048}
   - component: {fileID: 9076216229015153401}
   - component: {fileID: 3143572941148220502}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: SM_Chr_Attach_Zombie_Male_Hair_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1564,7 +1564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946632265127205033}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1918,7 +1918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2015347332703658431}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2043,7 +2043,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieController
   pool: []
-  trackTarget: {fileID: 0}
   ragdollColliders:
   - {fileID: 4606902257374803582}
   - {fileID: 6603004421209932409}
@@ -2056,8 +2055,8 @@ MonoBehaviour:
   - {fileID: 4613413888133370395}
   - {fileID: 4348572719062017133}
   - {fileID: 1973588678523222130}
-  headCollider: {fileID: 2022733548924767439}
   totalHp: 100
+  trackTarget: {fileID: 0}
 --- !u!195 &6332448483294399246
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2583,7 +2582,7 @@ GameObject:
   - component: {fileID: 2022733548924767439}
   - component: {fileID: 9056085513405457783}
   - component: {fileID: 2270904817490731949}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

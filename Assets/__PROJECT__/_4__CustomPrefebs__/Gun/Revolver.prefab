@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5067019745026412517}
   - component: {fileID: 4796270319351405891}
   - component: {fileID: 7981119340978271878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Spin_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 7722920213128120443}
   - component: {fileID: 7550924196413038939}
   - component: {fileID: 7393033912739059465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 1896868074785920545}
   - component: {fileID: 8160371822195713130}
   - component: {fileID: 7046876857367571505}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 8153210605449654080}
   - component: {fileID: 6582599379970239301}
   - component: {fileID: 9126710980906465583}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 4607313400018168063}
   - component: {fileID: 7990156716318173097}
   - component: {fileID: 2961668327542124471}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 112036243852121284}
   - component: {fileID: 4682531814461505299}
   - component: {fileID: 682341903345192218}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 1903895180322778575}
   - component: {fileID: 6451578600377740810}
   - component: {fileID: 7739511705376094025}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 4876484449953459696}
   - component: {fileID: 8500605577127141136}
   - component: {fileID: 8062897530903324393}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -764,7 +764,7 @@ GameObject:
   - component: {fileID: 5695944079689658591}
   - component: {fileID: 121548455135104630}
   - component: {fileID: 1599871845515258107}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -854,7 +854,7 @@ GameObject:
   - component: {fileID: 6654738204847311922}
   - component: {fileID: 3850170340928209901}
   - component: {fileID: 1886187923711978714}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,13 +943,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5095012972800988685}
   - component: {fileID: 8578201977107538123}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5095012972800988685
 Transform:
   m_ObjectHideFlags: 0
@@ -979,6 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556aad7e9954e164e8e6f680d36a543e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunController
+  rayOrigin: {fileID: 0}
   gunFlamePrefab: {fileID: 3261440642245614132, guid: cbeef3876f7ff8a46b9f249accd4e869, type: 3}
   flamePosition: {fileID: 8041327057607212987}
   cylinder: {fileID: 1858212976256683897}
@@ -992,6 +993,9 @@ MonoBehaviour:
   fireHapticDuration: 0.1
   semiAuto: 1
   fireInterval: 0
+  recoil: 0.1
+  shake: 0
+  recoilReturnSpeed: 10
 --- !u!1 &8041327057607212987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1005,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911564234344630934}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlamePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +1038,7 @@ GameObject:
   - component: {fileID: 782652809393091589}
   - component: {fileID: 490683565018371266}
   - component: {fileID: 1898300329333540248}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}

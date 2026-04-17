@@ -14,8 +14,8 @@ TagManager:
   - Map
   - TransparentCollider
   - Player
-  - Enemy
-  - 
+  - EnemyCollider
+  - EnemyHeadCollider
   - 
   - 
   - 

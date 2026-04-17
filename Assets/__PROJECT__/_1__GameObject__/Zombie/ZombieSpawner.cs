@@ -20,8 +20,8 @@ public class ZombieSpawner : MonoBehaviour
             var randomZombieIndex = Random.Range(0, zombiePrefabs.Length);
             var randomSpawnIndex = Random.Range(0, spawnPoints.Length);
             var newZombie = SG_ObjectPool.Inst.GetInstance(zombiePrefabs[randomZombieIndex]);
-            newZombie.transform.position = spawnPoints[randomSpawnIndex].position;
             var comp = newZombie.GetComponent<Zombie>();
+            comp.SetPosition(spawnPoints[randomSpawnIndex].position);
             comp.ResetState();
             comp.trackTarget = trackTarget;
             currentTime -= SG_GameMan.Inst.currentSpawnInterval;

@@ -1,9 +1,12 @@
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class GunController : MonoBehaviour
 {
+    public Transform rayOrigin;
+
     public GameObject gunFlamePrefab;
     public GameObject flamePosition;
     public GameObject cylinder;
@@ -138,6 +141,26 @@ public class GunController : MonoBehaviour
 
     public void FireGun()
     {
+        var zombieColliderMask = 1 << LayerMask.NameToLayer("EnemyCollider");
+        var zombieHeadMask = 1 << LayerMask.NameToLayer("EnemyHeadCollider");
+        var rayCastMask = zombieColliderMask | zombieHeadMask;
+
+        var result = Physics.RaycastAll(rayOrigin.position, rayOrigin.forward, 100f, rayCastMask);
+        foreach(var r in result)
+        {
+            var collidedLayer = 1 << r.collider.gameObject.layer;
+            if((collidedLayer & zombieColliderMask) != 0)
+            {
+                var comp = r.collider.gameObject.GetComponentInParent<Zombie>();
+                comp.GiveDamage(20, false);
+            }
+            else if((collidedLayer & zombieHeadMask) != 0)
+            {
+                var comp = r.collider.gameObject.GetComponentInParent<Zombie>();
+                comp.GiveDamage(20, true);
+            }
+        }
+
         var newFlame = SG_ObjectPool.Inst.GetInstance(gunFlamePrefab);
         newFlame.transform.position = flamePosition.transform.position;
         newFlame.transform.rotation = flamePosition.transform.rotation;
