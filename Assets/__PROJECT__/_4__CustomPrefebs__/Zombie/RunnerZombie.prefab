@@ -2043,6 +2043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieController
   pool: []
+  bloodParticlePrefab: {fileID: 5593481954163309136, guid: 2234a156a85a90a4abe3288e0c93615d, type: 3}
   ragdollColliders:
   - {fileID: 4606902257374803582}
   - {fileID: 6603004421209932409}

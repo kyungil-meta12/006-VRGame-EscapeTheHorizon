@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public class GunFlame : PoolObject
-{
+public class Blood : PoolObject
+{   
     private ParticleSystem particle;
 
     void Awake()
@@ -9,14 +9,14 @@ public class GunFlame : PoolObject
         particle = GetComponent<ParticleSystem>();
     }
 
-    void OnParticleSystemStopped()
-    {
-        ReturnInstance(gameObject);
-    }
-
     public void Play()
     {
         particle.Simulate(0f, true, true);
         particle.Play();
+    }
+
+    void OnParticleSystemStopped()
+    {
+        ReturnInstance(gameObject);
     }
 }

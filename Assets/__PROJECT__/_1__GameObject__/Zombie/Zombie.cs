@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Zombie : PoolObject
 {
+    public GameObject bloodParticlePrefab;
     public Collider[] ragdollColliders;
     public int totalHp;
     int currHp;
@@ -73,7 +74,7 @@ public class Zombie : PoolObject
         anim.SetBool("IsAttack", isAttack);
     }
 
-    public void GiveDamage(int dmg, bool isHeadShot)
+    public void GiveDamage(Vector3 hitPoint, Vector3 direction, int dmg, bool isHeadShot)
     {
         if(isDead)
         {
@@ -85,6 +86,11 @@ public class Zombie : PoolObject
         {
             EnableRagdoll();
         }
+
+        var newBloodParticle = SG_ObjectPool.Inst.GetInstance(bloodParticlePrefab);
+        newBloodParticle.transform.position = hitPoint;
+        newBloodParticle.transform.forward = -direction;
+        newBloodParticle.GetComponent<Blood>().Play();
     }
 
     // 애니메이션 클립 이벤트 호출 함수

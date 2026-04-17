@@ -152,12 +152,14 @@ public class GunController : MonoBehaviour
             if((collidedLayer & zombieColliderMask) != 0)
             {
                 var comp = r.collider.gameObject.GetComponentInParent<Zombie>();
-                comp.GiveDamage(20, false);
+                comp.GiveDamage(r.point, r.normal, 20, false);
+                break;
             }
             else if((collidedLayer & zombieHeadMask) != 0)
             {
                 var comp = r.collider.gameObject.GetComponentInParent<Zombie>();
-                comp.GiveDamage(20, true);
+                comp.GiveDamage(r.point, r.normal, 20, true);
+                break;
             }
         }
 
