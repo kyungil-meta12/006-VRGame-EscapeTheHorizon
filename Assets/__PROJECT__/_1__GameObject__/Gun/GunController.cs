@@ -166,8 +166,6 @@ public class GunController : MonoBehaviour
         newFlame.transform.rotation = flamePosition.transform.rotation;
         newFlame.GetComponent<GunFlame>().Play();
 
-        SG_CamShaker.Inst.AddShake(shake);
-
         gunRecoilOffset += recoil;
 
         if (hapticSupported)
