@@ -11,6 +11,10 @@ public class GunController : MonoBehaviour
     public Transform ammoPosition;
 
     public AudioClip[] fireSounds;
+    public AudioClip reloadSound;
+
+    public int maxAmmo;
+    private int currAmmo;
 
     public GameObject gunFlamePrefab;
     public Transform flamePosition;
@@ -50,11 +54,15 @@ public class GunController : MonoBehaviour
     private bool hapticSupported;
     private InputDevice device;
 
+    private Vector3 currentVelocity;
+    private Vector3 lastVelocity;
+
     private AudioSource audio_;
 
     void Awake()
     {
         audio_ = GetComponent<AudioSource>();
+        currAmmo = maxAmmo;
     }
 
     void Start()
@@ -73,6 +81,8 @@ public class GunController : MonoBehaviour
         }
 
         gunOriginPoision = transform.localPosition;
+
+        SG_AmmoIndicator.Inst.InputAmmo(currAmmo);
     }
 
     // Update is called once per frame
@@ -86,6 +96,25 @@ public class GunController : MonoBehaviour
         device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
         hapticSupported = device.TryGetHapticCapabilities(out HapticCapabilities capabilities) && capabilities.supportsImpulse;
         device.TryGetFeatureValue(CommonUsages.trigger, out triggerDepth);
+        device.TryGetFeatureValue(CommonUsages.deviceVelocity, out Vector3 currentVelocity);
+    
+        Vector3 acceleration = (currentVelocity - lastVelocity) / Time.deltaTime;
+        lastVelocity = currentVelocity;
+
+        // 세게 흔들어 재장전
+        if (acceleration.magnitude > 30f)
+        {
+            if(currAmmo < maxAmmo) {
+                audio_.PlayOneShot(reloadSound);
+                currAmmo = maxAmmo;
+                SG_AmmoIndicator.Inst.InputAmmo(currAmmo);
+            }
+        }
+
+        if(currAmmo == 0)
+        {
+            return;
+        }
 
         if(semiAuto) { // 단발식일 경우
             if(triggerDepth > enterDepth)
@@ -191,5 +220,9 @@ public class GunController : MonoBehaviour
         {
             device.SendHapticImpulse(0, 1.0f, fireHapticDuration);
         }
+        
+        // 총알 소진
+        currAmmo--;
+        SG_AmmoIndicator.Inst.InputAmmo(currAmmo);
     }
 }
