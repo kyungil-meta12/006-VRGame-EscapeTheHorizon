@@ -1,7 +1,6 @@
-using System.Reflection;
+
 using UnityEngine;
 using UnityEngine.XR;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class GunController : MonoBehaviour
 {
@@ -88,7 +87,7 @@ public class GunController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SG_GameMan.Inst.pauseState)
+        if(SG_GameMan.Inst.pauseState || !SG_GameMan.Inst.gameStarted)
         {
             return;
         }

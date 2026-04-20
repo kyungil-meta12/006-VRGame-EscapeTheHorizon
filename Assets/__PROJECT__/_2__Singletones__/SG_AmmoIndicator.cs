@@ -23,9 +23,20 @@ public class SG_AmmoIndicator : MonoBehaviour
         print("[SG_AmmoIndicator] Created instance.");
     }
 
+    void OnDestroy()
+    {
+        Inst = null;
+    }
+
     void Start()
     {
         defaultColor = text.color;
+        text.gameObject.SetActive(false);
+    }
+
+    public void EnableUI()
+    {
+        text.gameObject.SetActive(true);
     }
 
     void Update()

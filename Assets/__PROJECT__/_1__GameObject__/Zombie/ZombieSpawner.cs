@@ -9,7 +9,7 @@ public class ZombieSpawner : MonoBehaviour
 
     void Update()
     {
-        if(SG_GameMan.Inst.pauseState)
+        if(SG_GameMan.Inst.pauseState || !SG_GameMan.Inst.gameStarted)
         {
             return;
         }

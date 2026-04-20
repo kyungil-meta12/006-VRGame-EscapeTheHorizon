@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class Zombie : PoolObject
 {
+    private AudioSource audio_;
+    public AudioClip deadSound;
+    public AudioClip hitSound;
     public GameObject bloodParticlePrefab;
     public Collider[] ragdollColliders;
     public int totalHp;
@@ -22,6 +25,7 @@ public class Zombie : PoolObject
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        audio_ = GetComponent<AudioSource>();
         ResetState();
     }
 
@@ -44,6 +48,7 @@ public class Zombie : PoolObject
     public void OnZombieAttack()
     {
         SG_PlayerHPMan.Inst.OnDamage(damage);
+        audio_.PlayOneShot(hitSound);
     }
 
     public void EnableRagdoll()
@@ -57,6 +62,8 @@ public class Zombie : PoolObject
         agent.enabled = false;
         anim.enabled = false;
         SG_GameMan.Inst.currentKill++;
+        SG_ScoreMan.Inst.AddCurrentScore(100);
+        audio_.PlayOneShot(deadSound);
         StartCoroutine(AutoReturn()); // 3초 후 인스턴스 리턴
     }
 

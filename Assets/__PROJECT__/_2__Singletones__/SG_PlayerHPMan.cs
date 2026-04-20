@@ -1,14 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SG_PlayerHPMan : MonoBehaviour
 {
     public static SG_PlayerHPMan Inst;
     public int maxHP;
-    public Image img;
     public Slider slider;
-    private float opacity;
-    private IntPair hp = new();
+    private int hp;
 
     void Awake()
     {
@@ -18,43 +17,41 @@ public class SG_PlayerHPMan : MonoBehaviour
             return;
         }
         Inst = this;
-        SetAlpha(0f);
         SetHP(maxHP);
 
         print("[SG_DamageIndicator] Created instance.");
     }
 
-    void Update()
+    void OnDestroy()
     {
-        if(hp.IsDifferent())
-        {
-            opacity = 1f;
-            hp.MakeSame();
-        }
-        opacity -= Time.deltaTime * 2f;
-        opacity = Mathf.Clamp(opacity, 0f, 1f);
-        SetAlpha(opacity);
+        Inst = null;
     }
 
-    void SetAlpha(float opacity)
+    void Start()
     {
-        var color = img.color;
-        color.a = opacity;
-        img.color = color;
+        slider.gameObject.SetActive(false);
+    } 
+
+    public void EnableUI()
+    {
+        slider.gameObject.SetActive(true);
     }
 
     public void OnDamage(int val)
     {
-        hp.curr -= val;
+        hp -= val;
         slider.value -= val;
-        hp.curr = Mathf.Clamp(hp.curr, 0, maxHP);
+        hp = Mathf.Clamp(hp, 0, maxHP);
         slider.value = Mathf.Clamp(slider.value, 0, slider.maxValue);
+        if(hp <= 0)
+        {
+            SG_GameMan.Inst.EnableGameOverState();
+        }
     }
 
     public void SetHP(int val)
     {
-        hp.curr = val;
-        hp.prev = val;
+        hp = val;
         slider.maxValue = val;
         slider.value = val;
     }
