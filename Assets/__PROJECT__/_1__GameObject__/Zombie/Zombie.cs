@@ -9,6 +9,7 @@ public class Zombie : PoolObject
     public Collider[] ragdollColliders;
     public int totalHp;
     int currHp;
+    public int damage;
     Animator anim;
     NavMeshAgent agent;
     bool isAttack = false;
@@ -38,6 +39,11 @@ public class Zombie : PoolObject
             isAttack = IsDestinationReached();
             anim.SetBool("IsAttack", isAttack);
         }
+    }
+
+    public void OnZombieAttack()
+    {
+        SG_PlayerHPMan.Inst.OnDamage(damage);
     }
 
     public void EnableRagdoll()
@@ -72,6 +78,8 @@ public class Zombie : PoolObject
         isAttack = false;
         anim.enabled = true;
         anim.SetBool("IsAttack", isAttack);
+        anim.Rebind();
+        anim.Update(0f);
     }
 
     public void GiveDamage(Rigidbody rb, Vector3 hitPoint, Vector3 direction, int dmg, bool isHeadShot)
@@ -92,12 +100,6 @@ public class Zombie : PoolObject
         newBloodParticle.transform.position = hitPoint;
         newBloodParticle.transform.forward = -direction;
         newBloodParticle.GetComponent<Blood>().Play();
-    }
-
-    // 애니메이션 클립 이벤트 호출 함수
-    public void OnHit()
-    {
-        
     }
 
     bool IsDestinationReached()

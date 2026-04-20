@@ -2042,7 +2042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599fcba371bddb345a638e263e209727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieController
-  pool: []
   bloodParticlePrefab: {fileID: 5593481954163309136, guid: 2234a156a85a90a4abe3288e0c93615d, type: 3}
   ragdollColliders:
   - {fileID: 4606902257374803582}
@@ -2057,6 +2056,7 @@ MonoBehaviour:
   - {fileID: 4348572719062017133}
   - {fileID: 1973588678523222130}
   totalHp: 100
+  damage: 10
   trackTarget: {fileID: 0}
 --- !u!195 &6332448483294399246
 NavMeshAgent:

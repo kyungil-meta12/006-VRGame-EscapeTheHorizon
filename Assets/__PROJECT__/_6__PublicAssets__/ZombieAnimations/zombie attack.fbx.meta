@@ -54,7 +54,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4010695
+        functionName: OnZombieAttack
+        data: 
+        objectReferenceParameter: {fileID: 7746050524462267075, guid: ee1aedf7274473d4bb23a1d8dc82d537, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

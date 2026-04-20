@@ -8,6 +8,7 @@ public class SG_AmmoIndicator : MonoBehaviour
     public TextMeshProUGUI text;
     private IntPair ammoValue = new();
     private float textScale = 1f;
+    private Color defaultColor;
     
     void Awake()
     {
@@ -20,6 +21,11 @@ public class SG_AmmoIndicator : MonoBehaviour
         Inst = this;
 
         print("[SG_AmmoIndicator] Created instance.");
+    }
+
+    void Start()
+    {
+        defaultColor = text.color;
     }
 
     void Update()
@@ -37,6 +43,14 @@ public class SG_AmmoIndicator : MonoBehaviour
     public void InputAmmo(int val)
     {
         ammoValue.curr = val;
-        text.text = $"{ammoValue.curr}";
+        if(ammoValue.curr > 0) {
+            text.text = $"{ammoValue.curr}";
+            text.color = defaultColor;
+        }
+        else
+        {
+            text.color = new Color(1f, 0f, 0f);
+            text.text = "R";
+        }
     }
 }
